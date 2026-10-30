@@ -1,7 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 
-// Hi-Touch Global theme
+// Theme
 import theme from "./theme";
 
 // Public website pages
@@ -10,18 +11,42 @@ import Countries from "./pages/Countries";
 import Canada from "./pages/Canada";
 import UnitedKingdom from "./pages/UnitedKingdom";
 
-// Shared student dashboard layout
+// Student dashboard layout
 import StudentLayout from "./components/student/layout/StudentLayout";
 
-// Student pages
+// Student dashboard pages
 import StudentHome from "./pages/student/StudentHome";
 import StudentProfile from "./pages/student/StudentProfile";
 import StudentApplications from "./pages/student/StudentApplications";
+
+// Not Found page
+function NotFound() {
+  return (
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="site-container not-found"
+    >
+      <p className="eyebrow">HITOUCH GLOBAL</p>
+
+      <h1>Let's get you back on course.</h1>
+
+      <p>
+        The page you're looking for isn't available at this address.
+      </p>
+
+      <Link className="button button-primary" to="/">
+        Back to home
+      </Link>
+    </main>
+  );
+}
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+
         {/* Public website */}
         <Route path="/" element={<Home />} />
 
@@ -37,7 +62,7 @@ export default function App() {
           element={<UnitedKingdom />}
         />
 
-        {/* Student dashboard: shared theme, sidebar and topbar */}
+        {/* Student dashboard */}
         <Route
           path="/student"
           element={
@@ -46,26 +71,31 @@ export default function App() {
             </ThemeProvider>
           }
         >
-          {/* /student */}
+          {/* Student dashboard home */}
           <Route
             index
             element={<StudentHome preview />}
           />
 
-          {/* /student/profile */}
+          {/* Student profile */}
           <Route
             path="profile"
             element={<StudentProfile />}
           />
 
-          {/* /student/applications */}
+          {/* Student applications */}
           <Route
             path="applications"
             element={<StudentApplications preview />}
           />
-
-          {/* Add future student routes here. */}
         </Route>
+
+        {/* Unknown routes */}
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+
       </Routes>
     </BrowserRouter>
   );
