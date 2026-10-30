@@ -2,12 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 
-const BLUE = "#00AEEF";
+const BLUE = "#00AEEF"; // brand blue
+const BLUE_SOFT = "rgba(0,174,239,0.12)";
 
 const RING = 36; // normal ring size (px)
 const RING_HOVER = 68; // ring size over links and buttons (px)
 const DOT = 8; // center dot size (px)
-const FOLLOW = 0.16; // 0 to 1: lower = more delay, higher = tighter follow
+const FOLLOW = 0.08; // 0 to 1: lower = slower and smoother (was 0.16)
 
 // anything matching this makes the ring expand
 const INTERACTIVE =
@@ -152,10 +153,12 @@ const CustomCursor = () => {
             borderRadius: "50%",
             boxSizing: "border-box",
             border: `1.5px solid ${BLUE}`,
-            backgroundColor: hovering ? "rgba(0,174,239,0.12)" : "transparent",
+            backgroundColor: hovering ? BLUE_SOFT : "transparent",
+            // thin white halo keeps the ring visible on dark photos
+            boxShadow: "0 0 0 1px rgba(255,255,255,0.55)",
             opacity: show ? 1 : 0,
             transition:
-              "width 0.35s cubic-bezier(0.22,1,0.36,1), height 0.35s cubic-bezier(0.22,1,0.36,1), background-color 0.3s ease, opacity 0.3s ease",
+              "width 0.5s cubic-bezier(0.22,1,0.36,1), height 0.5s cubic-bezier(0.22,1,0.36,1), background-color 0.4s ease, opacity 0.3s ease",
           }}
         />
       </Box>
@@ -183,8 +186,9 @@ const CustomCursor = () => {
             height: DOT,
             borderRadius: "50%",
             backgroundColor: BLUE,
+            boxShadow: "0 0 0 1px rgba(255,255,255,0.7)",
             opacity: show ? 1 : 0,
-            transition: "transform 0.25s ease, opacity 0.3s ease",
+            transition: "transform 0.3s ease, opacity 0.3s ease",
           }}
         />
       </Box>

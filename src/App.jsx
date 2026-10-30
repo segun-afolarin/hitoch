@@ -1,26 +1,71 @@
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import SiteHeader from './components/layout/SiteHeader';
-import Hero from './components/home/Hero';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
 
-function NotFound() {
-  return (
-    <main id="main-content" tabIndex={-1} className="site-container not-found">
-      <p className="eyebrow">HITOUCH GLOBAL</p>
-      <h1>Let’s get you back on course.</h1>
-      <p>The page you’re looking for isn’t available at this address.</p>
-      <Link className="button button-primary" to="/">Back to home</Link>
-    </main>
-  );
-}
+// Hi-Touch Global theme
+import theme from "./theme";
+
+// Public website pages
+import Home from "./pages/Home";
+import Countries from "./pages/Countries";
+import Canada from "./pages/Canada";
+import UnitedKingdom from "./pages/UnitedKingdom";
+
+// Shared student dashboard layout
+import StudentLayout from "./components/student/layout/StudentLayout";
+
+// Student pages
+import StudentHome from "./pages/student/StudentHome";
+import StudentProfile from "./pages/student/StudentProfile";
+import StudentApplications from "./pages/student/StudentApplications";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <a className="skip-link" href="#main-content">Skip to content</a>
-      <SiteHeader />
       <Routes>
-        <Route path="/" element={<main id="main-content" tabIndex={-1}><Hero /></main>} />
-        <Route path="*" element={<NotFound />} />
+        {/* Public website */}
+        <Route path="/" element={<Home />} />
+
+        <Route path="/countries" element={<Countries />} />
+
+        <Route
+          path="/countries/canada"
+          element={<Canada />}
+        />
+
+        <Route
+          path="/countries/united-kingdom"
+          element={<UnitedKingdom />}
+        />
+
+        {/* Student dashboard: shared theme, sidebar and topbar */}
+        <Route
+          path="/student"
+          element={
+            <ThemeProvider theme={theme}>
+              <StudentLayout />
+            </ThemeProvider>
+          }
+        >
+          {/* /student */}
+          <Route
+            index
+            element={<StudentHome preview />}
+          />
+
+          {/* /student/profile */}
+          <Route
+            path="profile"
+            element={<StudentProfile />}
+          />
+
+          {/* /student/applications */}
+          <Route
+            path="applications"
+            element={<StudentApplications preview />}
+          />
+
+          {/* Add future student routes here. */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );
