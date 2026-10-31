@@ -40,8 +40,7 @@ function documentUrl(value) {
 function prepareUpdates(value) {
   if (!Array.isArray(value)) return null;
 
-  // The API must enforce student visibility before
-  // returning records. This filter is an extra safeguard.
+  // Student visibility must also be enforced by the API.
   return value
     .filter(
       (item) =>
@@ -67,13 +66,14 @@ const buttonSx = {
   px: 1.75,
   borderRadius: "8px",
   fontSize: 12,
+  fontWeight: 600,
   textTransform: "none",
   color: "text.primary",
   borderColor: "#DDE5EA",
 
   "&:hover": {
     bgcolor: "#F5FAFC",
-    borderColor: "primary.main",
+    borderColor: "#00AEEF",
   },
 
   "&.Mui-focusVisible": {
@@ -87,6 +87,7 @@ export default function StudentApplicationUpdates({
 }) {
   const headingId = useId();
   const dialogId = useId();
+  const listId = useId();
 
   const [expanded, setExpanded] = useState(false);
   const [note, setNote] = useState(null);
@@ -135,21 +136,212 @@ export default function StudentApplicationUpdates({
         </Typography>
 
         {!updates?.length ? (
-          <Typography
+          <Box
             sx={{
-              py: 3,
-              fontSize: 13,
-              lineHeight: 1.8,
-              color: "text.secondary",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              pt: 3.5,
+              pb: 3,
+              px: 1,
             }}
           >
-            {updates
-              ? "Updates will appear here when they are shared with you."
-              : "Application updates are not available yet."}
-          </Typography>
+            <Box
+              component="svg"
+              viewBox="0 0 220 168"
+              aria-hidden="true"
+              focusable="false"
+              sx={{
+                display: "block",
+                width: 176,
+                maxWidth: "100%",
+                height: "auto",
+                mb: 2,
+              }}
+            >
+              <circle
+                cx="109"
+                cy="77"
+                r="60"
+                fill="#F3F9FD"
+              />
+
+              <ellipse
+                cx="110"
+                cy="149"
+                rx="62"
+                ry="5"
+                fill="#EAF1F5"
+              />
+
+              {/* Folder back */}
+              <path
+                d="M42 103V89a8 8 0 0 1 8-8h28l10 10h74a8 8 0 0 1 8 8v34a10 10 0 0 1-10 10H52a10 10 0 0 1-10-10Z"
+                fill="#C8EAF9"
+                stroke="#A1D8EE"
+                strokeWidth="1.5"
+              />
+
+              {/* Document stack */}
+              <rect
+                x="80"
+                y="24"
+                width="77"
+                height="105"
+                rx="10"
+                fill="#E5F2FA"
+                stroke="#D7E9F3"
+                strokeWidth="1.5"
+                transform="rotate(8 118 76)"
+              />
+
+              <rect
+                x="64"
+                y="20"
+                width="78"
+                height="111"
+                rx="10"
+                fill="#FFFFFF"
+                stroke="#D8E7EF"
+                strokeWidth="1.5"
+              />
+
+              <rect
+                x="78"
+                y="35"
+                width="25"
+                height="23"
+                rx="6"
+                fill="#EAF7FD"
+              />
+
+              <path
+                d="M85 43h11M85 49h7"
+                fill="none"
+                stroke="#00AEEF"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+
+              <path
+                d="M79 72h47M79 84h36M79 96h41"
+                fill="none"
+                stroke="#D9E6EE"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+              />
+
+              {/* Folder front */}
+              <path
+                d="M46 101h128a5 5 0 0 1 5 6l-8 29a10 10 0 0 1-10 7H55a10 10 0 0 1-10-8l-4-28a5 5 0 0 1 5-6Z"
+                fill="#E5F5FC"
+                stroke="#A7DAEF"
+                strokeWidth="1.5"
+              />
+
+              <path
+                d="M62 121h29"
+                stroke="#8AC8E0"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+
+              <circle
+                cx="151"
+                cy="121"
+                r="3"
+                fill="#00AEEF"
+                opacity=".55"
+              />
+
+              {/* Consultant note */}
+              <path
+                d="M160 46h25a9 9 0 0 1 9 9v13a9 9 0 0 1-9 9h-13l-10 8v-8h-2a9 9 0 0 1-9-9V55a9 9 0 0 1 9-9Z"
+                fill="#FFFFFF"
+                stroke="#EEDBCC"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+
+              <circle
+                cx="163"
+                cy="62"
+                r="2"
+                fill="#FD933D"
+              />
+
+              <circle
+                cx="173"
+                cy="62"
+                r="2"
+                fill="#FD933D"
+              />
+
+              <circle
+                cx="183"
+                cy="62"
+                r="2"
+                fill="#FD933D"
+              />
+
+              {/* Decorative accents */}
+              <circle
+                cx="31"
+                cy="69"
+                r="3.5"
+                fill="#C3E8F7"
+              />
+
+              <circle
+                cx="192"
+                cy="120"
+                r="3"
+                fill="#FD933D"
+                opacity=".55"
+              />
+
+              <path
+                d="M44 36h8m-4-4v8"
+                stroke="#B5DCEB"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </Box>
+
+            <Typography
+              component="h3"
+              sx={{
+                fontSize: 16,
+                fontWeight: 600,
+                letterSpacing: "-0.2px",
+                lineHeight: 1.5,
+                color: "#404041",
+              }}
+            >
+              {updates
+                ? "No updates shared yet"
+                : "Updates are currently unavailable"}
+            </Typography>
+
+            <Typography
+              sx={{
+                mt: 0.75,
+                maxWidth: 290,
+                fontSize: 13,
+                lineHeight: 1.85,
+                color: "#6F6F73",
+              }}
+            >
+              {updates
+                ? "Progress updates, notes and documents from your consultant will appear here."
+                : "Please check again shortly to view your application updates."}
+            </Typography>
+          </Box>
         ) : (
           <Box
             component="ol"
+            id={listId}
             sx={{
               listStyle: "none",
               m: 0,
@@ -170,7 +362,7 @@ export default function StudentApplicationUpdates({
               return (
                 <Box
                   component="li"
-                  key={update.id || update.sourceIndex}
+                  key={update.id ?? update.sourceIndex}
                   sx={{
                     position: "relative",
                     pl: 3,
@@ -190,8 +382,8 @@ export default function StudentApplicationUpdates({
                       height: 8,
                       borderRadius: "50%",
                       bgcolor: update.attachment
-                        ? "secondary.main"
-                        : "primary.main",
+                        ? "#FD933D"
+                        : "#00AEEF",
                     }}
                   />
 
@@ -203,7 +395,7 @@ export default function StudentApplicationUpdates({
                         left: 3,
                         top: 20,
                         bottom: 3,
-                        width: 1,
+                        width: "1px",
                         bgcolor: "#E5EAEE",
                       }}
                     />
@@ -248,34 +440,41 @@ export default function StudentApplicationUpdates({
                     {update.title}
                   </Typography>
 
-                  {update.body && (
-                    <Typography
-                      sx={{
-                        mt: 0.75,
-                        fontSize: 12.5,
-                        lineHeight: 1.85,
-                        color: "text.secondary",
-                        overflowWrap: "anywhere",
-                      }}
-                    >
-                      {update.body}
-                    </Typography>
-                  )}
+                  {typeof update.body === "string" &&
+                    update.body.trim() && (
+                      <Typography
+                        sx={{
+                          mt: 0.75,
+                          fontSize: 12.5,
+                          lineHeight: 1.85,
+                          color: "text.secondary",
+                          overflowWrap: "anywhere",
+                          whiteSpace: "pre-wrap",
+                        }}
+                      >
+                        {update.body}
+                      </Typography>
+                    )}
 
-                  {update.authorName && (
-                    <Typography
-                      sx={{
-                        mt: 1,
-                        fontSize: 11,
-                        fontWeight: 500,
-                      }}
-                    >
-                      {update.authorName}
-                      {update.authorRole
-                        ? ` · ${update.authorRole}`
-                        : ""}
-                    </Typography>
-                  )}
+                  {typeof update.authorName === "string" &&
+                    update.authorName.trim() && (
+                      <Typography
+                        sx={{
+                          mt: 1,
+                          fontSize: 11,
+                          fontWeight: 500,
+                          overflowWrap: "anywhere",
+                        }}
+                      >
+                        {update.authorName}
+
+                        {typeof update.authorRole ===
+                          "string" &&
+                        update.authorRole.trim()
+                          ? ` · ${update.authorRole}`
+                          : ""}
+                      </Typography>
+                    )}
 
                   {update.attachment && (
                     <Box sx={{ mt: 1.5 }}>
@@ -287,8 +486,11 @@ export default function StudentApplicationUpdates({
                           overflowWrap: "anywhere",
                         }}
                       >
-                        {update.attachment.name ||
-                          "Shared document"}
+                        {typeof update.attachment.name ===
+                          "string" &&
+                        update.attachment.name.trim()
+                          ? update.attachment.name
+                          : "Shared document"}
                       </Typography>
 
                       {url ? (
@@ -298,8 +500,11 @@ export default function StudentApplicationUpdates({
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Open ${
-                            update.attachment.name ||
-                            "document"
+                            typeof update.attachment.name ===
+                              "string" &&
+                            update.attachment.name.trim()
+                              ? update.attachment.name
+                              : "document"
                           } in a new tab`}
                           variant="outlined"
                           sx={buttonSx}
@@ -339,6 +544,7 @@ export default function StudentApplicationUpdates({
           <Button
             type="button"
             aria-expanded={expanded}
+            aria-controls={listId}
             onClick={() =>
               setExpanded((value) => !value)
             }
@@ -375,9 +581,13 @@ export default function StudentApplicationUpdates({
           sx={{
             fontSize: 19,
             fontWeight: 600,
+            overflowWrap: "anywhere",
           }}
         >
-          {note?.name}
+          {typeof note?.name === "string" &&
+          note.name.trim()
+            ? note.name
+            : "Shared note"}
         </DialogTitle>
 
         <DialogContent dividers>
